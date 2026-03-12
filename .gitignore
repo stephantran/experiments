@@ -1,0 +1,43 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+*.egg
+.pytest_cache/
+
+# === JavaScript / TypeScript ===
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.next/
+dist/
+*.tsbuildinfo
+
+# === Rust ===
+target/
+Cargo.lock
+
+# === Jupyter Notebooks ===
+.ipynb_checkpoints/
+
+# === OS ===
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# === IDEs ===
+.vscode/
+.idea/
+*.code-workspace
+
+# === Environment / Secrets ===
+.env
+.env.local
+*.pem
+*.key

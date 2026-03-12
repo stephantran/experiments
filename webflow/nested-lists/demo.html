@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Territory Tags — Template Mode Demo</title>
+  <style>
+    /* Page base (simulating dark Webflow site) */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0e0e0e;
+      color: #ccc;
+      padding: 40px 24px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 { color: #fff; font-size: 1.4rem; margin-bottom: 8px; }
+    .subtitle { color: #666; font-size: 0.85rem; margin-bottom: 32px; }
+    .rep-card { border-top: 1px solid rgba(255,255,255,0.15); padding: 24px 0; }
+    .rep-name { font-size: 1.5rem; color: #fff; margin-bottom: 4px; }
+    .rep-detail { font-size: 0.9rem; line-height: 1.7; color: #aaa; }
+    .rep-detail strong { color: #ddd; }
+    .rep-detail a { color: #7eb8da; text-decoration: none; }
+
+    /* --- NO custom territory CSS in <head>! --- */
+    /* All territory styling comes from the template below, */
+    /* which you would style in Webflow's visual Designer.  */
+    /* These inline styles simulate what Webflow would generate. */
+  </style>
+</head>
+<body>
+
+  <!--
+    ============================================================
+    TEMPLATE — Build this ONCE in Webflow Designer, style visually.
+    The script auto-hides this wrapper and clones the inner
+    elements for each territory tag.
+
+    In Webflow Designer, you'd create:
+      Div Block  →  attribute: data-territory-template
+      └── Div Block  →  class: territory-tag
+          ├── Text Block  →  class: territory-state
+          └── Text Block  →  class: territory-regions
+    ============================================================
+  -->
+  <div data-territory-template>
+
+    <!-- Style this div as your "tag" in the Designer:
+         display: inline-flex, padding, border-radius, background, border, etc. -->
+    <div class="territory-tag" style="
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      background-color: rgba(0, 210, 211, 0.08);
+      border: 1px solid rgba(0, 210, 211, 0.25);
+      color: #ccc;
+    ">
+
+      <!-- Style this as the bold state name -->
+      <span class="territory-state" style="
+        font-weight: 600;
+        color: #00d2d3;
+      ">State</span>
+
+      <!-- Style this as the lighter region qualifier -->
+      <span class="territory-regions" style="
+        font-weight: 400;
+        color: rgba(0, 210, 211, 0.5);
+        font-size: 0.8rem;
+      ">Region</span>
+
+    </div>
+  </div>
+
+  <!-- The container where tags get placed also needs flex-wrap.
+       In Webflow, you'd style the div with data-territory-target
+       as display:flex, flex-wrap:wrap, gap:8px -->
+
+  <style>
+    /* This one style is still needed for the container layout.
+       In Webflow, you'd set this on the data-territory-target div class. */
+    .territory-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+  </style>
+
+  <h1>Sales Representatives</h1>
+  <p class="subtitle">Template mode — all tag styling done in Webflow Designer, no CSS in &lt;head&gt;</p>
+
+  <!-- REP 1 -->
+  <div class="rep-card">
+    <div data-territories>southeastern-alaska, western-washington, eastern-washington, northern-idaho</div>
+    <div data-territory-target></div>
+    <h2 class="rep-name">The Lighting Group</h2>
+    <div class="rep-detail">
+      <strong>Website:</strong> <a href="https://lightinggroup.com">lightinggroup.com</a><br>
+      <strong>Contact:</strong> George Stringer, President<br>
+      <strong>Phone:</strong> 206.298.9000
+    </div>
+  </div>
+
+  <!-- REP 2 -->
+  <div class="rep-card">
+    <div data-territories>oregon, washington, northern-california, central-california, sw-washington, northern-nevada</div>
+    <div data-territory-target></div>
+    <h2 class="rep-name">Associated Lighting Representatives (ALR)</h2>
+    <div class="rep-detail">
+      <strong>Website:</strong> <a href="https://alrinc.com">alrinc.com</a><br>
+      <strong>Contact:</strong> Darrell Packard, Principal<br>
+      <strong>Phone:</strong> 510.638.3800
+    </div>
+  </div>
+
+  <!-- REP 3 -->
+  <div class="rep-card">
+    <div data-territories>colorado, wyoming, montana</div>
+    <div data-territory-target></div>
+    <h2 class="rep-name">The Lighting Agency</h2>
+    <div class="rep-detail">
+      <strong>Contact:</strong> Jason Fisher, President<br>
+      <strong>Phone:</strong> 303.455.1012
+    </div>
+  </div>
+
+  <!-- REP 4 -->
+  <div class="rep-card">
+    <div data-territories>kansas, missouri, nebraska, iowa</div>
+    <div data-territory-target></div>
+    <h2 class="rep-name">Mercer Zimmerman</h2>
+    <div class="rep-detail">
+      <strong>Contact:</strong> Trevor Kramer, President<br>
+      <strong>Phone:</strong> 913.438.4546
+    </div>
+  </div>
+
+  <!-- REP 5 — stress test -->
+  <div class="rep-card">
+    <div data-territories>alabama, arkansas, florida, georgia, kentucky, louisiana, mississippi, north-carolina, oklahoma, south-carolina, tennessee, texas, puerto-rico</div>
+    <div data-territory-target></div>
+    <h2 class="rep-name">SESCO (stress test — 13 territories)</h2>
+    <div class="rep-detail">
+      <strong>Contact:</strong> John Palk, President &amp; CEO
+    </div>
+  </div>
+
+  <script src="territories.js"></script>
+</body>
+</html>

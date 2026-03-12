@@ -4,19 +4,35 @@
  * Parses a comma-separated plain text field of territories and renders
  * them as styled, grouped tags inside each rep card.
  *
- * Accepts TWO formats:
- *   Display names:  "Washington (Western), California (Northern), Idaho"
- *   CMS slugs:      "western-washington, northern-california, idaho"
+ * TEMPLATE MODE (recommended):
+ *   Style the tags visually in Webflow Designer, then the script clones
+ *   your styled elements. No custom CSS needed in <head>.
  *
- * SETUP:
+ *   Build this structure ONCE anywhere on the page (outside the collection list):
+ *
+ *     Div Block → attribute: data-territory-template
+ *     └── Div Block → class: territory-tag
+ *         ├── Text Block → class: territory-state   (placeholder: "State")
+ *         └── Text Block → class: territory-regions  (placeholder: "Region")
+ *
+ *   Style .territory-tag, .territory-state, .territory-regions visually
+ *   in the Designer. The template wrapper is auto-hidden by the script.
+ *
+ * FALLBACK MODE:
+ *   If no template is found, the script creates elements with those same
+ *   class names. You'd then style them via custom CSS in <head>.
+ *
+ * DATA SETUP:
  *   1. Add a plain text field "Territory List" to your REPS collection
- *   2. In Webflow, inside each rep Collection Item, add:
+ *      Accepts display names: "Washington (Western), Idaho"
+ *      Or CMS slugs:         "western-washington, idaho"
+ *
+ *   2. Inside each rep Collection Item, add:
  *      - A Text Block bound to "Territory List"
- *        → Add custom attribute: data-territories
- *      - An empty Div Block where the tags will render
- *        → Add custom attribute: data-territory-target
- *      (The target div is optional — the script will create one if missing)
- *   3. Paste this script + the CSS into your page custom code.
+ *        → attribute: data-territories
+ *      - A Div Block where the tags will render
+ *        → attribute: data-territory-target
+ *        (Optional — script creates one if missing)
  */
 
 (function () {
@@ -27,15 +43,12 @@
 
   // ---- SLUG-TO-NAME CONVERSION ----
 
-  // Known region prefixes that appear BEFORE the state name in CMS slugs.
-  // Order matters: longer prefixes first so "southeastern" matches before "south".
   var REGION_PREFIXES = [
     "northeastern", "northwestern", "southeastern", "southwestern",
     "northern", "southern", "eastern", "western", "central",
     "ne", "nw", "se", "sw"
   ];
 
-  // Multi-word US states (slug form → proper name)
   var MULTI_WORD_STATES = {
     "new-hampshire": "New Hampshire",
     "new-jersey": "New Jersey",
@@ -51,99 +64,56 @@
     "puerto-rico": "Puerto Rico"
   };
 
-  // Short region abbreviations that should be fully uppercased
   var UPPERCASE_REGIONS = ["ne", "nw", "se", "sw"];
 
-  /** Title-case a single word: "washington" → "Washington", "sw" → "SW" */
   function titleCase(str) {
-    if (UPPERCASE_REGIONS.indexOf(str.toLowerCase()) > -1) {
-      return str.toUpperCase();
-    }
+    if (UPPERCASE_REGIONS.indexOf(str.toLowerCase()) > -1) return str.toUpperCase();
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
-  /** Convert a hyphenated slug to a proper name: "new-york" → "New York" */
   function slugToName(slug) {
     if (MULTI_WORD_STATES[slug]) return MULTI_WORD_STATES[slug];
     return slug.split("-").map(titleCase).join(" ");
   }
 
-  /**
-   * Detect if a string looks like a CMS slug (lowercase + hyphens, no parens).
-   */
   function isSlug(str) {
     return /^[a-z0-9-]+$/.test(str.trim());
   }
 
-  /**
-   * Parse a CMS slug like "western-washington" → { state: "Washington", region: "Western" }
-   * Or a plain state slug like "oregon" → { state: "Oregon", region: null }
-   */
   function parseSlug(slug) {
     slug = slug.trim();
-
-    // Try each region prefix
     for (var i = 0; i < REGION_PREFIXES.length; i++) {
       var prefix = REGION_PREFIXES[i];
       if (slug.indexOf(prefix + "-") === 0) {
-        var stateSlug = slug.slice(prefix.length + 1); // everything after "prefix-"
+        var stateSlug = slug.slice(prefix.length + 1);
         if (stateSlug.length > 0) {
-          return {
-            state: slugToName(stateSlug),
-            region: titleCase(prefix)
-          };
+          return { state: slugToName(stateSlug), region: titleCase(prefix) };
         }
       }
     }
-
-    // No region prefix found — whole-state coverage
     return { state: slugToName(slug), region: null };
   }
 
-  // ---- DISPLAY NAME PARSING ----
-
-  /**
-   * Parse "Washington (Western)" → { state: "Washington", region: "Western" }
-   * Parse "Colorado"             → { state: "Colorado",   region: null }
-   */
   function parseDisplayName(raw) {
     var trimmed = raw.trim();
     var match = trimmed.match(/^(.+?)\s*\(([^)]+)\)\s*$/);
-    if (match) {
-      return { state: match[1].trim(), region: match[2].trim() };
-    }
+    if (match) return { state: match[1].trim(), region: match[2].trim() };
     return { state: trimmed, region: null };
   }
 
-  // ---- UNIFIED PARSER ----
-
-  /**
-   * Auto-detect format and parse a single territory entry.
-   */
   function parseTerritory(raw) {
     var trimmed = raw.trim();
     if (!trimmed) return null;
-    if (isSlug(trimmed)) {
-      return parseSlug(trimmed);
-    }
-    return parseDisplayName(trimmed);
+    return isSlug(trimmed) ? parseSlug(trimmed) : parseDisplayName(trimmed);
   }
 
   // ---- GROUPING ----
 
-  /**
-   * Group an array of { state, region } by state name.
-   * Returns: [ { state: "Washington", regions: ["Western", "Eastern"] }, ... ]
-   */
   function groupByState(territories) {
     var map = new Map();
     territories.forEach(function (t) {
-      if (!map.has(t.state)) {
-        map.set(t.state, []);
-      }
-      if (t.region) {
-        map.get(t.state).push(t.region);
-      }
+      if (!map.has(t.state)) map.set(t.state, []);
+      if (t.region) map.get(t.state).push(t.region);
     });
     var groups = [];
     map.forEach(function (regions, state) {
@@ -152,39 +122,87 @@
     return groups;
   }
 
+  // ---- TEMPLATE HANDLING ----
+
+  /**
+   * Look for a Webflow-designed template on the page.
+   * Returns { tag, stateEl, regionEl } or null if not found.
+   */
+  function findTemplate() {
+    var wrapper = document.querySelector("[data-territory-template]");
+    if (!wrapper) return null;
+
+    var tag = wrapper.querySelector(".territory-tag");
+    if (!tag) return null;
+
+    var stateEl = tag.querySelector(".territory-state");
+    var regionEl = tag.querySelector(".territory-regions");
+
+    // Hide the template wrapper so it doesn't show on the page
+    wrapper.style.display = "none";
+
+    return {
+      tag: tag,
+      stateEl: stateEl,
+      regionEl: regionEl
+    };
+  }
+
   // ---- RENDERERS ----
 
-  /** Render grouped tags: "Washington  Western · Eastern" */
-  function renderGrouped(groups, container) {
-    groups.forEach(function (group) {
-      var tag = document.createElement("div");
+  /**
+   * Create a tag element — clones from template if available,
+   * otherwise creates plain elements.
+   */
+  function createTag(template, stateName, regionText) {
+    var tag, stateEl, regionEl;
+
+    if (template) {
+      // Clone the Webflow-styled template
+      tag = template.tag.cloneNode(true);
+      stateEl = tag.querySelector(".territory-state");
+      regionEl = tag.querySelector(".territory-regions");
+    } else {
+      // Fallback: create plain elements (styled via custom CSS)
+      tag = document.createElement("div");
       tag.className = "territory-tag";
+      stateEl = document.createElement("span");
+      stateEl.className = "territory-state";
+      tag.appendChild(stateEl);
+      regionEl = document.createElement("span");
+      regionEl.className = "territory-regions";
+      tag.appendChild(regionEl);
+    }
 
-      var stateName = document.createElement("span");
-      stateName.className = "territory-state";
-      stateName.textContent = group.state;
-      tag.appendChild(stateName);
+    // Fill in the text content
+    if (stateEl) stateEl.textContent = stateName;
 
-      if (group.regions.length > 0) {
-        var regionList = document.createElement("span");
-        regionList.className = "territory-regions";
-        regionList.textContent = group.regions.join(" \u00b7 ");
-        tag.appendChild(regionList);
+    if (regionText) {
+      if (regionEl) {
+        regionEl.textContent = regionText;
+        regionEl.style.display = "";
       }
+    } else {
+      // No region — hide the region element
+      if (regionEl) regionEl.style.display = "none";
+    }
 
+    return tag;
+  }
+
+  function renderGrouped(groups, container, template) {
+    groups.forEach(function (group) {
+      var regionText = group.regions.length > 0
+        ? group.regions.join(" \u00b7 ")
+        : null;
+      var tag = createTag(template, group.state, regionText);
       container.appendChild(tag);
     });
   }
 
-  /** Render flat tags: one tag per territory */
-  function renderFlat(territories, container) {
+  function renderFlat(territories, container, template) {
     territories.forEach(function (t) {
-      var tag = document.createElement("div");
-      tag.className = "territory-tag";
-
-      var label = t.region ? t.state + " (" + t.region + ")" : t.state;
-      tag.textContent = label;
-
+      var tag = createTag(template, t.state, t.region);
       container.appendChild(tag);
     });
   }
@@ -192,27 +210,27 @@
   // ---- MAIN ----
 
   function init() {
+    // Find the optional Webflow-designed template
+    var template = findTemplate();
+
     var sources = document.querySelectorAll("[data-territories]");
 
     sources.forEach(function (source) {
       var raw = source.textContent.trim();
       if (!raw) return;
 
-      // Find the nearest target container (sibling or within same parent)
+      // Find the target container (sibling within same parent)
       var parent = source.parentElement;
       var target = parent.querySelector("[data-territory-target]");
-
-      // Don't match the parent itself if it has the attribute
       if (target === parent) target = null;
 
       if (!target) {
-        // Create a target container right after the source element
         target = document.createElement("div");
         target.setAttribute("data-territory-target", "");
         source.after(target);
       }
 
-      // Clear any previously rendered tags (in case of re-run)
+      // Clear any previously rendered tags
       target.innerHTML = "";
 
       // Parse territories
@@ -221,13 +239,14 @@
       });
       var territories = entries.map(parseTerritory).filter(Boolean);
 
-      // Render
+      // Add the container class (for flex layout if using CSS fallback)
       target.classList.add("territory-container");
+
+      // Render
       if (GROUPED) {
-        var groups = groupByState(territories);
-        renderGrouped(groups, target);
+        renderGrouped(groupByState(territories), target, template);
       } else {
-        renderFlat(territories, target);
+        renderFlat(territories, target, template);
       }
 
       // Hide the raw text source

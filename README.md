@@ -10,6 +10,7 @@ Organized by language, each mini-project lives in its own self-contained folder 
 python/          Python experiments
 javascript/      JavaScript / TypeScript experiments
 rust/            Rust experiments
+webflow/         Webflow custom code experiments
 notebooks/       Jupyter notebooks for data exploration
 ```
 
@@ -17,7 +18,7 @@ notebooks/       Jupyter notebooks for data exploration
 
 | Project | Language | Description |
 |---------|----------|-------------|
-| _Your first experiment goes here_ | | |
+| [nested-lists](webflow/nested-lists/) | Webflow | Nested list structures in Webflow |
 
 ## Adding a New Experiment
 

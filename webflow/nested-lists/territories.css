@@ -1,0 +1,56 @@
+/* ============================================
+   Territory Tags — Styles
+   Paste into Webflow Project Settings → Custom Code → <head>
+   wrapped in <style>...</style> tags
+   ============================================ */
+
+/* Container: wraps all tags for one rep */
+.territory-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Individual territory tag */
+.territory-tag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ccc;
+}
+
+/* State name (bold part) */
+.territory-state {
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Region qualifier (lighter, after state name) */
+.territory-regions {
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+}
+
+/* ---- FLAT MODE (when GROUPED = false) ---- */
+/* Flat tags don't have .territory-state / .territory-regions,
+   they just use the tag's own text. These styles apply to both. */
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 480px) {
+  .territory-container {
+    gap: 6px;
+  }
+
+  .territory-tag {
+    font-size: 0.78rem;
+    padding: 3px 8px;
+  }
+}

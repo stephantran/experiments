@@ -46,6 +46,7 @@
   var REGION_PREFIXES = [
     "northeastern", "northwestern", "southeastern", "southwestern",
     "northern", "southern", "eastern", "western", "central",
+    "el-paso",
     "ne", "nw", "se", "sw"
   ];
 
@@ -64,10 +65,15 @@
     "puerto-rico": "Puerto Rico"
   };
 
-  var UPPERCASE_REGIONS = ["ne", "nw", "se", "sw"];
+  var REGION_DISPLAY_NAMES = {
+    "ne": "Northeast",
+    "nw": "Northwest",
+    "se": "Southeast",
+    "sw": "Southwest"
+  };
 
   function titleCase(str) {
-    if (UPPERCASE_REGIONS.indexOf(str.toLowerCase()) > -1) return str.toUpperCase();
+    if (REGION_DISPLAY_NAMES[str.toLowerCase()]) return REGION_DISPLAY_NAMES[str.toLowerCase()];
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
@@ -87,7 +93,7 @@
       if (slug.indexOf(prefix + "-") === 0) {
         var stateSlug = slug.slice(prefix.length + 1);
         if (stateSlug.length > 0) {
-          return { state: slugToName(stateSlug), region: titleCase(prefix) };
+          return { state: slugToName(stateSlug), region: slugToName(prefix) };
         }
       }
     }
@@ -207,6 +213,74 @@
     });
   }
 
+  // ---- STATE FILTER ----
+
+  /**
+   * Initialises the state filter dropdown.
+   *
+   * WEBFLOW SETUP:
+   *   1. Add a top-level Collection List bound to the "States" collection,
+   *      sorted A→Z. Give it class: state-source-list, set display: none.
+   *      Inside each item add a Text Block bound to State Name,
+   *      class: state-option.
+   *
+   *   2. Add a <select> element (inside a Form Block) above the Reps list,
+   *      ID: state-filter. Add one manual option "All States" with value "".
+   *
+   *   The script populates the <select> from the hidden list and filters
+   *   rep cards on change by matching against rendered .territory-state text.
+   */
+  function initFilter() {
+    var select = document.getElementById("state-filter");
+    if (!select) return; // no filter on this page
+
+    // Populate options from hidden CMS-driven Collection List
+    var sources = document.querySelectorAll(".state-option");
+    sources.forEach(function (el) {
+      var name = el.textContent.trim();
+      if (!name) return;
+      var opt = document.createElement("option");
+      opt.value = name;
+      opt.textContent = name;
+      select.appendChild(opt);
+    });
+
+    // Identify rep cards — use the Webflow CMS item class or a custom class
+    function getRepCards() {
+      // Try custom class first, fall back to Webflow's default CMS item class
+      var cards = document.querySelectorAll(".rep-card");
+      if (cards.length === 0) cards = document.querySelectorAll(".w-dyn-item");
+      return cards;
+    }
+
+    select.addEventListener("change", function () {
+      var selected = select.value;
+      var cards = getRepCards();
+
+      cards.forEach(function (card) {
+        // Cards with data-territory-always are never hidden (e.g. house account)
+        // Check the card itself OR any ancestor (e.g. Collection List Wrapper)
+        if (card.closest("[data-territory-always]")) {
+          card.style.display = "";
+          return;
+        }
+
+        // "All States" (empty value) — show everything
+        if (!selected) {
+          card.style.display = "";
+          return;
+        }
+
+        // Check if any rendered state tag matches the selected state
+        var tags = card.querySelectorAll(".territory-state");
+        var match = Array.from(tags).some(function (tag) {
+          return tag.textContent.trim() === selected;
+        });
+        card.style.display = match ? "" : "none";
+      });
+    });
+  }
+
   // ---- MAIN ----
 
   function init() {
@@ -252,6 +326,9 @@
       // Hide the raw text source
       source.style.display = "none";
     });
+
+    // Initialise state filter after tags are rendered
+    initFilter();
   }
 
   // Run on DOM ready

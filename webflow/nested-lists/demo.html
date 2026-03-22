@@ -95,6 +95,56 @@
   <h1>Sales Representatives</h1>
   <p class="subtitle">Template mode — all tag styling done in Webflow Designer, no CSS in &lt;head&gt;</p>
 
+  <!-- STATE FILTER — In Webflow: Form Block with a <select> element -->
+  <div style="margin-bottom: 24px;">
+    <select id="state-filter" style="
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      background: #1a1a1a;
+      color: #ccc;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      cursor: pointer;
+    ">
+      <option value="">All States</option>
+    </select>
+  </div>
+
+  <!--
+    HIDDEN STATES LIST — In Webflow: top-level Collection List
+    bound to "States" collection, sorted A→Z, display: none.
+    Each item has a Text Block (class: state-option) bound to State Name.
+    Here we simulate it with static markup.
+  -->
+  <div class="state-source-list" style="display: none;">
+    <div><span class="state-option">Alabama</span></div>
+    <div><span class="state-option">Alaska</span></div>
+    <div><span class="state-option">Arkansas</span></div>
+    <div><span class="state-option">California</span></div>
+    <div><span class="state-option">Colorado</span></div>
+    <div><span class="state-option">Florida</span></div>
+    <div><span class="state-option">Georgia</span></div>
+    <div><span class="state-option">Idaho</span></div>
+    <div><span class="state-option">Iowa</span></div>
+    <div><span class="state-option">Kansas</span></div>
+    <div><span class="state-option">Kentucky</span></div>
+    <div><span class="state-option">Louisiana</span></div>
+    <div><span class="state-option">Mississippi</span></div>
+    <div><span class="state-option">Missouri</span></div>
+    <div><span class="state-option">Montana</span></div>
+    <div><span class="state-option">Nebraska</span></div>
+    <div><span class="state-option">Nevada</span></div>
+    <div><span class="state-option">North Carolina</span></div>
+    <div><span class="state-option">Oklahoma</span></div>
+    <div><span class="state-option">Oregon</span></div>
+    <div><span class="state-option">Puerto Rico</span></div>
+    <div><span class="state-option">South Carolina</span></div>
+    <div><span class="state-option">Tennessee</span></div>
+    <div><span class="state-option">Texas</span></div>
+    <div><span class="state-option">Washington</span></div>
+    <div><span class="state-option">Wyoming</span></div>
+  </div>
+
   <!-- REP 1 -->
   <div class="rep-card">
     <div data-territories>southeastern-alaska, western-washington, eastern-washington, northern-idaho</div>

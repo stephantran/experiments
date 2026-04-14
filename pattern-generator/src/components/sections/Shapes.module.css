@@ -1,0 +1,121 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.shapeBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 4px;
+  border: 1px solid var(--stroke);
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.1s;
+}
+
+.shapeBtn:hover {
+  border-color: var(--text-muted);
+}
+
+.shapeBtn.active {
+  border-color: var(--accent);
+  background: rgba(232, 80, 10, 0.05);
+}
+
+.preview {
+  width: 24px;
+  height: 24px;
+}
+
+.label {
+  font-size: 9px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.uploadSection {
+  margin-top: 12px;
+}
+
+.uploadLabel {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.dropZone {
+  border: 1px dashed var(--stroke);
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 10px;
+  color: var(--text-muted);
+  transition: border-color 0.15s;
+}
+
+.dropZone:hover {
+  border-color: var(--text-primary);
+}
+
+.fileInput {
+  display: none;
+}
+
+.savedSection {
+  margin-top: 12px;
+}
+
+.savedGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.savedBtn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--stroke);
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  padding: 4px;
+}
+
+.savedBtn.active {
+  border-color: var(--accent);
+}
+
+.savedPreview {
+  width: 100%;
+  height: 100%;
+}
+
+.deleteBtn {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--stroke);
+  background: var(--panel);
+  font-size: 10px;
+  line-height: 1;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.savedBtn:hover .deleteBtn {
+  display: flex;
+}

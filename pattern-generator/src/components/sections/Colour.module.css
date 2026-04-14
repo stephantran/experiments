@@ -1,0 +1,23 @@
+.group {
+  margin-bottom: 12px;
+}
+
+.group:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}

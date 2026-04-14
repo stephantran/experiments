@@ -1,0 +1,34 @@
+.button {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 8px 12px;
+  border: 1px solid var(--stroke);
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+  font-family: 'DM Mono', monospace;
+}
+
+.button:hover {
+  background: var(--text-primary);
+  color: var(--surface);
+}
+
+.button.active {
+  background: var(--accent);
+  color: #FFFFFF;
+  border-color: var(--accent);
+}
+
+.button.active:hover {
+  background: var(--accent);
+  color: #FFFFFF;
+}
+
+/* Full-width variant for export buttons */
+.full {
+  width: 100%;
+}

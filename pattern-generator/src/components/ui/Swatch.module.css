@@ -1,0 +1,28 @@
+.swatch {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--stroke);
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition: border-color 0.1s;
+}
+
+.swatch:hover {
+  border-color: var(--text-muted);
+}
+
+.swatch.active {
+  border: 2px solid var(--accent);
+  box-shadow: inset 0 0 0 1px #FFFFFF;
+}
+
+.colorInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}

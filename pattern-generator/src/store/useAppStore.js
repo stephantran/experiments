@@ -91,6 +91,7 @@ const useAppStore = create((set, get) => ({
   // Presets
   activePreset: 'PS2',
   presets: DEFAULT_PRESETS,
+  userPresets: [], // [{ id, name, state }]
 
   // Interpolation
   _animFrame: null,
@@ -249,6 +250,80 @@ const useAppStore = create((set, get) => ({
     try {
       const raw = localStorage.getItem('form-saved-shapes');
       if (raw) set({ savedShapes: JSON.parse(raw) });
+    } catch {
+      /* ignore */
+    }
+  },
+
+  // Actions — Serialize / Deserialize state for JSON IO
+  serializeState: () => {
+    const s = get();
+    return {
+      distribution: s.distribution,
+      growth: s.growth,
+      spread: s.spread,
+      bloom: s.bloom,
+      count: s.count,
+      decayAmount: s.decayAmount,
+      decayCurve: s.decayCurve,
+      decayInvert: s.decayInvert,
+      bgColor: s.bgColor,
+      shapeColor: s.shapeColor,
+      selectedShape: s.selectedShape,
+      gridVisible: s.gridVisible,
+      gridCols: s.gridCols,
+      gridRows: s.gridRows,
+    };
+  },
+
+  applySerializedState: (obj) => {
+    if (!obj || typeof obj !== 'object') return { ok: false, error: 'Invalid input' };
+    const allowedKeys = [
+      'distribution', 'growth', 'spread', 'bloom', 'count',
+      'decayAmount', 'decayCurve', 'decayInvert',
+      'bgColor', 'shapeColor', 'selectedShape',
+      'gridVisible', 'gridCols', 'gridRows',
+    ];
+    const patch = {};
+    for (const k of allowedKeys) {
+      if (k in obj) patch[k] = obj[k];
+    }
+    if ('bloom' in patch) patch.baseBloom = patch.bloom;
+    patch.activePreset = null;
+    set(patch);
+    return { ok: true };
+  },
+
+  // Actions — User presets (persisted to localStorage)
+  saveUserPreset: (name) => {
+    const state = get();
+    const snapshot = get().serializeState();
+    const id = 'up-' + Date.now();
+    const entry = { id, name: name || 'Untitled', state: snapshot };
+    const next = [...state.userPresets, entry];
+    localStorage.setItem('form-user-presets', JSON.stringify(next));
+    set({ userPresets: next });
+    return entry;
+  },
+
+  loadUserPreset: (id) => {
+    const state = get();
+    const preset = state.userPresets.find((p) => p.id === id);
+    if (!preset) return;
+    get().applySerializedState(preset.state);
+  },
+
+  deleteUserPreset: (id) => {
+    const state = get();
+    const next = state.userPresets.filter((p) => p.id !== id);
+    localStorage.setItem('form-user-presets', JSON.stringify(next));
+    set({ userPresets: next });
+  },
+
+  hydrateUserPresets: () => {
+    try {
+      const raw = localStorage.getItem('form-user-presets');
+      if (raw) set({ userPresets: JSON.parse(raw) });
     } catch {
       /* ignore */
     }

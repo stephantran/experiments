@@ -6,6 +6,8 @@ import Distribution from './sections/Distribution';
 import GridControls from './sections/GridControls';
 import Colour from './sections/Colour';
 import Shapes from './sections/Shapes';
+import PresetManager from './sections/PresetManager';
+import Parameters from './sections/Parameters';
 import Export from './sections/Export';
 import styles from './Sidebar.module.css';
 
@@ -24,6 +26,8 @@ export default function Sidebar({ svgRef }) {
         <GridControls />
         <Colour />
         <Shapes />
+        <PresetManager />
+        <Parameters />
       </div>
       <Export svgRef={svgRef} />
     </aside>

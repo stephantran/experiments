@@ -1,0 +1,38 @@
+.textarea {
+  width: 100%;
+  border: 1px solid var(--stroke);
+  background: var(--surface);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text-primary);
+  padding: 8px;
+  resize: vertical;
+  outline: none;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.textarea:focus {
+  border-color: var(--accent);
+}
+
+.row {
+  display: flex;
+  gap: 4px;
+}
+
+.btn {
+  flex: 1;
+  padding: 6px 4px;
+  font-size: 9px;
+}
+
+.status {
+  margin-top: 6px;
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  text-align: center;
+}

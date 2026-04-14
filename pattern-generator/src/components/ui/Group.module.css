@@ -1,36 +1,34 @@
 .group {
   position: relative;
-  border-bottom: 2px solid var(--stroke-strong, var(--text-primary));
-  padding-left: 6px;
 }
 
-.group::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 3px;
-  background: var(--group-color);
+/* Tonal variants — very subtle, just enough tonal shift to separate groups */
+.light {
+  background: var(--bg);
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px 12px 6px 10px;
-  background: transparent;
-  border-bottom: 1px solid var(--stroke);
+.mid {
+  background: var(--panel);
 }
 
+.texture {
+  background: var(--bg);
+  /* Barely-there dot field */
+  background-image: radial-gradient(circle at 50% 50%, var(--stroke) 0.5px, transparent 0.6px);
+  background-size: 6px 6px;
+}
+
+/* Group label — small, muted, aligned with section content */
 .label {
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: var(--group-color);
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  padding: 10px 16px 4px;
+  display: block;
 }
 
 .body {
-  /* Sections inside will manage their own padding/dividers */
+  /* Sections inside keep their thin 1px dividers for readability; tone does the group separation */
 }

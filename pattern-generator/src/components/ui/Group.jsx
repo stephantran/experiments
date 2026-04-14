@@ -2,14 +2,17 @@ import styles from './Group.module.css';
 
 /**
  * Visual grouping container for related sections.
- * Draws a 2px colored left edge + small uppercase label to delineate the group.
+ * Subtle tonal band + muted label — no heavy borders.
+ *
+ * `tone` picks the subtle background treatment:
+ *   'light'   — bg color (off-white)
+ *   'mid'     — panel color (slightly darker)
+ *   'texture' — bg + very subtle dot texture
  */
-export default function Group({ label, color = 'var(--text-primary)', children }) {
+export default function Group({ label, tone = 'light', children }) {
   return (
-    <div className={styles.group} style={{ '--group-color': color }}>
-      <div className={styles.header}>
-        <span className={styles.label}>{label}</span>
-      </div>
+    <div className={`${styles.group} ${styles[tone]}`}>
+      {label && <div className={styles.label}>{label}</div>}
       <div className={styles.body}>{children}</div>
     </div>
   );

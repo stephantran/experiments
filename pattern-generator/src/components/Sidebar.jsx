@@ -20,28 +20,29 @@ export default function Sidebar({ svgRef }) {
         <span className={styles.title}>FORM</span>
       </div>
       <div className={styles.content}>
-        <Group label="Playback" color="#E8500A">
+        {/* Playback sits flush at top with no label — it's the primary control surface */}
+        <Group tone="light">
           <Presets />
           <Transport />
         </Group>
 
-        <Group label="Geometry" color="#1A1714">
+        <Group label="Geometry" tone="mid">
           <Pattern />
           <Distribution />
           <Rotation />
           <Decay />
         </Group>
 
-        <Group label="Appearance" color="#C96A00">
+        <Group label="Appearance" tone="light">
           <Shapes />
           <Colour />
         </Group>
 
-        <Group label="Frame" color="#7A7470">
+        <Group label="Frame" tone="texture">
           <GridControls />
         </Group>
 
-        <Group label="State" color="#3A3530">
+        <Group label="State" tone="mid">
           <PresetManager />
           <Parameters />
         </Group>

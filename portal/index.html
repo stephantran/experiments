@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>EXP-01 · experiments</title>
+  </head>
+  <body>
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">
+          <span class="logo-mark">◉</span>
+          <span class="logo-text">EXPERIMENTS</span>
+        </div>
+        <div class="tagline">MODULAR / GENERATIVE / TEMPORARY</div>
+      </div>
+      <div class="header-right">
+        <div class="meta-row"><span class="meta-k">MODEL</span><span class="meta-v">EXP-01</span></div>
+        <div class="meta-row"><span class="meta-k">SERIAL</span><span class="meta-v">ST · 2026 · 001</span></div>
+        <div class="meta-row"><span class="meta-k">REV</span><span class="meta-v">A</span></div>
+      </div>
+    </header>
+
+    <section class="system-bar">
+      <div class="system-item">
+        <span class="led led-on"></span>
+        <span class="system-label">PWR</span>
+      </div>
+      <div class="system-item">
+        <span class="led led-on"></span>
+        <span class="system-label">NET</span>
+      </div>
+      <div class="system-item">
+        <span class="led led-blink"></span>
+        <span class="system-label">SYS</span>
+      </div>
+      <div class="system-spacer"></div>
+      <div class="system-text">3 MODULES · 1 LIVE · 2 STANDBY</div>
+    </section>
+
+    <main class="grid">
+      <a class="card card-live" href="https://pattern-generator-pi-five.vercel.app" target="_blank" rel="noopener">
+        <div class="card-strip">
+          <span class="card-idx">01</span>
+          <span class="card-status"><span class="status-dot"></span>LIVE</span>
+        </div>
+        <div class="card-screen">
+          <div class="screen-label">MODEL</div>
+          <h2 class="card-title">FORM</h2>
+          <div class="card-subtitle">PATTERN GENERATOR</div>
+        </div>
+        <div class="card-spec">
+          <div class="spec-row"><span class="spec-k">STACK</span><span class="spec-v">REACT · VITE</span></div>
+          <div class="spec-row"><span class="spec-k">MODES</span><span class="spec-v">7</span></div>
+          <div class="spec-row"><span class="spec-k">OUTPUT</span><span class="spec-v">SVG · PNG</span></div>
+        </div>
+        <p class="card-desc">Generative pattern tool. Seven distribution algorithms, animated presets, production-ready vector export.</p>
+        <div class="card-foot">
+          <span class="card-action">OPEN</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+
+      <div class="card card-standby">
+        <div class="card-strip">
+          <span class="card-idx">02</span>
+          <span class="card-status card-status-off"><span class="status-dot"></span>STANDBY</span>
+        </div>
+        <div class="card-screen">
+          <div class="screen-label">MODEL</div>
+          <h2 class="card-title">SVG-PREP</h2>
+          <div class="card-subtitle">VECTOR CLEANUP</div>
+        </div>
+        <div class="card-spec">
+          <div class="spec-row"><span class="spec-k">STACK</span><span class="spec-v">VANILLA JS</span></div>
+          <div class="spec-row"><span class="spec-k">PASSES</span><span class="spec-v">8</span></div>
+          <div class="spec-row"><span class="spec-k">OUTPUT</span><span class="spec-v">SVG</span></div>
+        </div>
+        <p class="card-desc">SVG cleanup pipeline: parse, sanitize, normalize viewBox, inline styles, currentColor, minify.</p>
+        <div class="card-foot">
+          <span class="card-action">SOON</span>
+          <span class="card-arrow">—</span>
+        </div>
+      </div>
+
+      <div class="card card-standby">
+        <div class="card-strip">
+          <span class="card-idx">03</span>
+          <span class="card-status card-status-off"><span class="status-dot"></span>STANDBY</span>
+        </div>
+        <div class="card-screen">
+          <div class="screen-label">MODEL</div>
+          <h2 class="card-title">WEBFLOW</h2>
+          <div class="card-subtitle">CMS SCRIPTS</div>
+        </div>
+        <div class="card-spec">
+          <div class="spec-row"><span class="spec-k">STACK</span><span class="spec-v">VANILLA JS</span></div>
+          <div class="spec-row"><span class="spec-k">SCRIPTS</span><span class="spec-v">4</span></div>
+          <div class="spec-row"><span class="spec-k">OUTPUT</span><span class="spec-v">DOM</span></div>
+        </div>
+        <p class="card-desc">Webflow extensions: nested lists, territory tags, CMS slug detection, template cloning.</p>
+        <div class="card-foot">
+          <span class="card-action">SOON</span>
+          <span class="card-arrow">—</span>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-ticks">
+        <span class="tick"></span><span class="tick"></span><span class="tick"></span>
+        <span class="tick tick-major"></span>
+        <span class="tick"></span><span class="tick"></span><span class="tick"></span>
+        <span class="tick tick-major"></span>
+        <span class="tick"></span><span class="tick"></span><span class="tick"></span>
+      </div>
+      <div class="footer-row">
+        <span class="footer-text">GITHUB · STEPHANTRAN/EXPERIMENTS</span>
+        <span class="footer-text footer-text-muted">© ST STUDIO — CHICAGO</span>
+      </div>
+    </footer>
+  </body>
+</html>

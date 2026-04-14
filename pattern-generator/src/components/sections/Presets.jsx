@@ -2,7 +2,7 @@ import useAppStore from '../../store/useAppStore';
 import Button from '../ui/Button';
 import styles from './Presets.module.css';
 
-const PRESET_ORDER = ['PC2', 'PC1', 'PS1', 'PS2'];
+const PRESET_ORDER = ['PC2', 'PC1', 'PS1', 'PS2', 'SP1'];
 
 export default function Presets() {
   const activePreset = useAppStore((s) => s.activePreset);

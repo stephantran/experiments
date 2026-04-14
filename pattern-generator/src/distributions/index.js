@@ -4,6 +4,7 @@ import grid from './grid.js';
 import fibonacci from './fibonacci.js';
 import random from './random.js';
 import concentric from './concentric.js';
+import spirograph from './spirograph.js';
 
 const distributions = {
   PHYLLOTAXIS: phyllotaxis,
@@ -12,6 +13,7 @@ const distributions = {
   FIBONACCI: fibonacci,
   RANDOM: random,
   CONCENTRIC: concentric,
+  SPIROGRAPH: spirograph,
 };
 
 export const DISTRIBUTION_KEYS = Object.keys(distributions);

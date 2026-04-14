@@ -13,6 +13,7 @@ export default function Canvas({ svgRef }) {
   const growth = useAppStore((s) => s.growth);
   const spread = useAppStore((s) => s.spread);
   const bloom = useAppStore((s) => s.bloom);
+  const count = useAppStore((s) => s.count);
   const selectedShape = useAppStore((s) => s.selectedShape);
   const playing = useAppStore((s) => s.playing);
   const speed = useAppStore((s) => s.speed);
@@ -42,9 +43,9 @@ export default function Canvas({ svgRef }) {
   const points = useMemo(() => {
     const distFn = distributions[distribution];
     if (!distFn) return [];
-    const count = Math.min(MAX_ELEMENTS, Math.floor(800 / Math.max(growth * 0.5, 0.1)));
-    return distFn({ count: Math.max(count, 10), growth, spread, bloom, canvasSize: 800 });
-  }, [distribution, growth, spread, bloom]);
+    const safeCount = Math.min(MAX_ELEMENTS, Math.max(10, Math.round(count)));
+    return distFn({ count: safeCount, growth, spread, bloom, canvasSize: 800 });
+  }, [distribution, growth, spread, bloom, count]);
 
   const savedShapes = useAppStore((s) => s.savedShapes);
   const builtInShape = SHAPES[selectedShape];

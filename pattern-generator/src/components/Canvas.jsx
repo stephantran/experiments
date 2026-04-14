@@ -18,6 +18,8 @@ export default function Canvas({ svgRef }) {
   const decayAmount = useAppStore((s) => s.decayAmount);
   const decayCurve = useAppStore((s) => s.decayCurve);
   const decayInvert = useAppStore((s) => s.decayInvert);
+  const rotationMode = useAppStore((s) => s.rotationMode);
+  const rotationAngle = useAppStore((s) => s.rotationAngle);
   const selectedShape = useAppStore((s) => s.selectedShape);
   const playing = useAppStore((s) => s.playing);
   const speed = useAppStore((s) => s.speed);
@@ -168,10 +170,11 @@ export default function Canvas({ svgRef }) {
                 const decayMul = applyDecay(t, decayCurve, decayAmount, decayInvert);
                 const finalScale = pt.scale * decayMul;
                 if (finalScale <= 0.001) return null;
+                const rot = rotationMode === 'FIXED' ? rotationAngle : pt.rotation;
                 return (
                   <g
                     key={i}
-                    transform={`translate(${pt.x}, ${pt.y}) rotate(${pt.rotation}) scale(${finalScale})`}
+                    transform={`translate(${pt.x}, ${pt.y}) rotate(${rot}) scale(${finalScale})`}
                   >
                     {renderShapeContent(shapeColor)}
                   </g>

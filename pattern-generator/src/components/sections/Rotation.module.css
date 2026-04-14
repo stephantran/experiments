@@ -1,0 +1,27 @@
+.modeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+}
+
+.toggleBtns {
+  display: flex;
+}
+
+.toggleBtn {
+  padding: 4px 12px;
+  font-size: 9px;
+}
+
+.toggleBtns .toggleBtn + .toggleBtn {
+  border-left: none;
+}

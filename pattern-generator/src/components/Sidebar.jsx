@@ -2,6 +2,7 @@ import Presets from './sections/Presets';
 import Transport from './sections/Transport';
 import Pattern from './sections/Pattern';
 import Decay from './sections/Decay';
+import Rotation from './sections/Rotation';
 import Distribution from './sections/Distribution';
 import GridControls from './sections/GridControls';
 import Colour from './sections/Colour';
@@ -22,6 +23,7 @@ export default function Sidebar({ svgRef }) {
         <Transport />
         <Pattern />
         <Decay />
+        <Rotation />
         <Distribution />
         <GridControls />
         <Colour />

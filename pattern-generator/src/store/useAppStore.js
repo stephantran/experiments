@@ -81,6 +81,10 @@ const useAppStore = create(persist((set, get) => ({
   decayCurve: 'PULSE',
   decayInvert: false,
 
+  // Rotation
+  rotationMode: 'FOLLOW', // 'FOLLOW' | 'FIXED'
+  rotationAngle: 0,
+
   // Grid
   gridVisible: false,
   gridCols: 12,
@@ -135,6 +139,10 @@ const useAppStore = create(persist((set, get) => ({
   setDecayAmount: (v) => set({ decayAmount: v }),
   setDecayCurve: (v) => set({ decayCurve: v }),
   setDecayInvert: (v) => set({ decayInvert: v }),
+
+  // Actions — Rotation
+  setRotationMode: (v) => set({ rotationMode: v }),
+  setRotationAngle: (v) => set({ rotationAngle: v }),
 
   // Actions — Grid
   setGridVisible: (v) => set({ gridVisible: v }),
@@ -283,6 +291,8 @@ const useAppStore = create(persist((set, get) => ({
       decayAmount: s.decayAmount,
       decayCurve: s.decayCurve,
       decayInvert: s.decayInvert,
+      rotationMode: s.rotationMode,
+      rotationAngle: s.rotationAngle,
       bgColor: s.bgColor,
       shapeColor: s.shapeColor,
       selectedShape: s.selectedShape,
@@ -297,6 +307,7 @@ const useAppStore = create(persist((set, get) => ({
     const allowedKeys = [
       'distribution', 'growth', 'spread', 'bloom', 'count',
       'decayAmount', 'decayCurve', 'decayInvert',
+      'rotationMode', 'rotationAngle',
       'bgColor', 'shapeColor', 'selectedShape',
       'gridVisible', 'gridCols', 'gridRows',
     ];
@@ -357,6 +368,8 @@ const useAppStore = create(persist((set, get) => ({
     decayAmount: s.decayAmount,
     decayCurve: s.decayCurve,
     decayInvert: s.decayInvert,
+    rotationMode: s.rotationMode,
+    rotationAngle: s.rotationAngle,
     bgColor: s.bgColor,
     shapeColor: s.shapeColor,
     selectedShape: s.selectedShape,

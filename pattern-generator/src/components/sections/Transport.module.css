@@ -3,17 +3,12 @@
   border-bottom: 1px solid var(--stroke);
 }
 
-.row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.playRow {
+  margin-bottom: 8px;
 }
 
 .playBtn {
   white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.speedSlider {
-  flex: 1;
+  width: 100%;
+  text-align: center;
 }

@@ -18,7 +18,7 @@
   min-width: 56px;
 }
 
-.animateBtn {
+.caret {
   width: 16px;
   height: 16px;
   display: flex;
@@ -31,15 +31,16 @@
   cursor: pointer;
   padding: 0;
   flex-shrink: 0;
-  transition: color 0.15s;
+  transition: color 0.15s, transform 0.15s;
 }
 
-.animateBtn:hover {
+.caret:hover {
   color: var(--text-primary);
 }
 
-.animateBtn.animating {
+.caret.caretOpen {
   color: var(--accent);
+  transform: rotate(90deg);
 }
 
 .range {
@@ -99,4 +100,40 @@
   text-align: right;
   min-width: 40px;
   font-variant-numeric: tabular-nums;
+}
+
+/* ---- Max config sub-row ---- */
+.configRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  margin-left: 64px; /* align under slider start */
+  padding: 4px 0;
+}
+
+.configLabel {
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  min-width: 30px;
+}
+
+.configInput {
+  flex: 1;
+  border: 1px solid var(--stroke);
+  background: var(--surface);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text-primary);
+  padding: 3px 6px;
+  outline: none;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.configInput:focus {
+  border-color: var(--accent);
 }

@@ -1,4 +1,13 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+const DEFAULT_SLIDER_MAXES = {
+  count: 6000,
+  growth: 15.0,
+  spread: 100.0,
+  bloom: 360.0,
+  speed: 1.0,
+};
 
 const DEFAULT_PRESETS = {
   PS2: {
@@ -53,9 +62,12 @@ const DEFAULT_PRESETS = {
   },
 };
 
-const useAppStore = create((set, get) => ({
+const useAppStore = create(persist((set, get) => ({
   // Canvas
   canvas: { width: 600, height: 600, zoom: 1, panX: 0, panY: 0 },
+
+  // Slider max caps (user-configurable)
+  sliderMaxes: { ...DEFAULT_SLIDER_MAXES },
 
   // Pattern
   distribution: 'PHYLLOTAXIS',
@@ -95,6 +107,10 @@ const useAppStore = create((set, get) => ({
 
   // Interpolation
   _animFrame: null,
+
+  // Actions — Slider maxes
+  setSliderMax: (key, value) =>
+    set((s) => ({ sliderMaxes: { ...s.sliderMaxes, [key]: value } })),
 
   // Actions — Pattern
   setGrowth: (v) => set({ growth: v }),
@@ -328,6 +344,29 @@ const useAppStore = create((set, get) => ({
       /* ignore */
     }
   },
+}), {
+  name: 'form-ui-state',
+  version: 1,
+  partialize: (s) => ({
+    distribution: s.distribution,
+    growth: s.growth,
+    spread: s.spread,
+    bloom: s.bloom,
+    count: s.count,
+    baseBloom: s.baseBloom,
+    decayAmount: s.decayAmount,
+    decayCurve: s.decayCurve,
+    decayInvert: s.decayInvert,
+    bgColor: s.bgColor,
+    shapeColor: s.shapeColor,
+    selectedShape: s.selectedShape,
+    gridVisible: s.gridVisible,
+    gridCols: s.gridCols,
+    gridRows: s.gridRows,
+    speed: s.speed,
+    sliderMaxes: s.sliderMaxes,
+    activePreset: s.activePreset,
+  }),
 }));
 
 export default useAppStore;

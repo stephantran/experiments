@@ -64,6 +64,11 @@ const useAppStore = create((set, get) => ({
   bloom: 171.5,
   count: 500,
 
+  // Decay
+  decayAmount: 0,
+  decayCurve: 'NONE',
+  decayInvert: false,
+
   // Grid
   gridVisible: false,
   gridCols: 12,
@@ -108,6 +113,11 @@ const useAppStore = create((set, get) => ({
   setPlaying: (p) => set({ playing: p }),
   setSpeed: (s) => set({ speed: s }),
   setAnimatingParam: (p) => set({ animatingParam: p }),
+
+  // Actions — Decay
+  setDecayAmount: (v) => set({ decayAmount: v }),
+  setDecayCurve: (v) => set({ decayCurve: v }),
+  setDecayInvert: (v) => set({ decayInvert: v }),
 
   // Actions — Grid
   setGridVisible: (v) => set({ gridVisible: v }),

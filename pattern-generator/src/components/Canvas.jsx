@@ -2,6 +2,7 @@ import { useMemo, useEffect, useCallback } from 'react';
 import useAppStore from '../store/useAppStore';
 import distributions from '../distributions/index';
 import { SHAPES } from '../shapes.jsx';
+import { applyDecay } from '../utils/decay';
 import styles from './Canvas.module.css';
 
 const MAX_ELEMENTS = 6000;
@@ -14,6 +15,9 @@ export default function Canvas({ svgRef }) {
   const spread = useAppStore((s) => s.spread);
   const bloom = useAppStore((s) => s.bloom);
   const count = useAppStore((s) => s.count);
+  const decayAmount = useAppStore((s) => s.decayAmount);
+  const decayCurve = useAppStore((s) => s.decayCurve);
+  const decayInvert = useAppStore((s) => s.decayInvert);
   const selectedShape = useAppStore((s) => s.selectedShape);
   const playing = useAppStore((s) => s.playing);
   const speed = useAppStore((s) => s.speed);
@@ -148,14 +152,32 @@ export default function Canvas({ svgRef }) {
         >
           <rect id="bg" x={vbX} y={vbY} width={viewBoxSize} height={viewBoxSize} fill={bgColor} />
           <g id="pattern-group">
-            {points.map((pt, i) => (
-              <g
-                key={i}
-                transform={`translate(${pt.x}, ${pt.y}) rotate(${pt.rotation}) scale(${pt.scale})`}
-              >
-                {renderShapeContent(shapeColor)}
-              </g>
-            ))}
+            {(() => {
+              // Compute max distance from center once per render so decay normalization
+              // is based on actual radial extent, not sequence order.
+              const cx = 400;
+              const cy = 400;
+              let maxD = 1;
+              for (const p of points) {
+                const d = Math.hypot(p.x - cx, p.y - cy);
+                if (d > maxD) maxD = d;
+              }
+              return points.map((pt, i) => {
+                const d = Math.hypot(pt.x - cx, pt.y - cy);
+                const t = d / maxD;
+                const decayMul = applyDecay(t, decayCurve, decayAmount, decayInvert);
+                const finalScale = pt.scale * decayMul;
+                if (finalScale <= 0.001) return null;
+                return (
+                  <g
+                    key={i}
+                    transform={`translate(${pt.x}, ${pt.y}) rotate(${pt.rotation}) scale(${finalScale})`}
+                  >
+                    {renderShapeContent(shapeColor)}
+                  </g>
+                );
+              });
+            })()}
           </g>
           {gridVisible && (
             <g data-grid="true">

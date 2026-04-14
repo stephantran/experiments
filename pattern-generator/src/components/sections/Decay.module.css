@@ -1,0 +1,79 @@
+.curveLabel {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+
+.curveGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+}
+
+.curveBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid var(--stroke);
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  transition: border-color 0.1s, background 0.1s;
+}
+
+.curveBtn:hover {
+  border-color: var(--text-muted);
+}
+
+.curveBtn.active {
+  border-color: var(--accent);
+  background: rgba(232, 80, 10, 0.08);
+  color: var(--accent);
+}
+
+.curvePreview {
+  width: 40px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.curveName {
+  font-size: 9px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.invertRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+}
+
+.toggleBtns {
+  display: flex;
+}
+
+.toggleBtn {
+  padding: 4px 10px;
+  font-size: 9px;
+}
+
+.toggleBtns .toggleBtn + .toggleBtn {
+  border-left: none;
+}

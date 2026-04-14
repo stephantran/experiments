@@ -18,7 +18,7 @@ export default function Pattern() {
         label="Count"
         value={count}
         min={10}
-        max={2000}
+        max={6000}
         step={10}
         onChange={setCount}
         decimals={0}

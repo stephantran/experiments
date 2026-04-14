@@ -4,7 +4,7 @@ import distributions from '../distributions/index';
 import { SHAPES } from '../shapes.jsx';
 import styles from './Canvas.module.css';
 
-const MAX_ELEMENTS = 2000;
+const MAX_ELEMENTS = 6000;
 
 export default function Canvas({ svgRef }) {
   const bgColor = useAppStore((s) => s.bgColor);

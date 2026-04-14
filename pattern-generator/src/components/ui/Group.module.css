@@ -1,0 +1,36 @@
+.group {
+  position: relative;
+  border-bottom: 2px solid var(--stroke-strong, var(--text-primary));
+  padding-left: 6px;
+}
+
+.group::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--group-color);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px 6px 10px;
+  background: transparent;
+  border-bottom: 1px solid var(--stroke);
+}
+
+.label {
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--group-color);
+}
+
+.body {
+  /* Sections inside will manage their own padding/dividers */
+}

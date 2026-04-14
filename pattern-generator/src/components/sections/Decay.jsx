@@ -9,19 +9,30 @@ export default function Decay() {
   const decayAmount = useAppStore((s) => s.decayAmount);
   const decayCurve = useAppStore((s) => s.decayCurve);
   const decayInvert = useAppStore((s) => s.decayInvert);
+  const opacityDecayAmount = useAppStore((s) => s.opacityDecayAmount);
   const setDecayAmount = useAppStore((s) => s.setDecayAmount);
   const setDecayCurve = useAppStore((s) => s.setDecayCurve);
   const setDecayInvert = useAppStore((s) => s.setDecayInvert);
+  const setOpacityDecayAmount = useAppStore((s) => s.setOpacityDecayAmount);
 
   return (
     <Section title="Decay">
       <Slider
-        label="Amount"
+        label="Size"
         value={decayAmount * 100}
         min={0}
         max={100}
         step={1}
         onChange={(v) => setDecayAmount(v / 100)}
+        decimals={0}
+      />
+      <Slider
+        label="Opacity"
+        value={opacityDecayAmount * 100}
+        min={0}
+        max={100}
+        step={1}
+        onChange={(v) => setOpacityDecayAmount(v / 100)}
         decimals={0}
       />
 

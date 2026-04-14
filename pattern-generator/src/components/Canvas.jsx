@@ -10,6 +10,10 @@ const MAX_ELEMENTS = 6000;
 export default function Canvas({ svgRef }) {
   const bgColor = useAppStore((s) => s.bgColor);
   const shapeColor = useAppStore((s) => s.shapeColor);
+  const shapeColor2 = useAppStore((s) => s.shapeColor2);
+  const gradientEnabled = useAppStore((s) => s.gradientEnabled);
+  const opacityDecayAmount = useAppStore((s) => s.opacityDecayAmount);
+  const strokeWidth = useAppStore((s) => s.strokeWidth);
   const distribution = useAppStore((s) => s.distribution);
   const growth = useAppStore((s) => s.growth);
   const spread = useAppStore((s) => s.spread);
@@ -59,8 +63,8 @@ export default function Canvas({ svgRef }) {
     ? savedShapes.find((s) => s.id === selectedShape)
     : null;
 
-  const renderShapeContent = (color) => {
-    if (builtInShape) return builtInShape.render(color);
+  const renderShapeContent = (color, sw) => {
+    if (builtInShape) return builtInShape.render(color, sw);
     if (customShape) {
       return (
         <g
@@ -69,7 +73,25 @@ export default function Canvas({ svgRef }) {
         />
       );
     }
-    return SHAPES.CIRCLE.render(color);
+    return SHAPES.CIRCLE.render(color, sw);
+  };
+
+  // Hex → RGB helper for color interpolation
+  const hexToRgb = (hex) => {
+    const h = hex.replace('#', '');
+    return [
+      parseInt(h.slice(0, 2), 16),
+      parseInt(h.slice(2, 4), 16),
+      parseInt(h.slice(4, 6), 16),
+    ];
+  };
+  const lerpColor = (a, b, t) => {
+    const [ar, ag, ab] = hexToRgb(a);
+    const [br, bg, bb] = hexToRgb(b);
+    const r = Math.round(ar + (br - ar) * t);
+    const g = Math.round(ag + (bg - ag) * t);
+    const bl = Math.round(ab + (bb - ab) * t);
+    return `rgb(${r}, ${g}, ${bl})`;
   };
 
   const gridVisible = useAppStore((s) => s.gridVisible);
@@ -171,12 +193,18 @@ export default function Canvas({ svgRef }) {
                 const finalScale = pt.scale * decayMul;
                 if (finalScale <= 0.001) return null;
                 const rot = rotationMode === 'FIXED' ? rotationAngle : pt.rotation;
+
+                // Per-particle color (gradient) and opacity (same decay curve for coherence)
+                const color = gradientEnabled ? lerpColor(shapeColor, shapeColor2, t) : shapeColor;
+                const opacityMul = applyDecay(t, decayCurve, opacityDecayAmount, decayInvert);
+
                 return (
                   <g
                     key={i}
                     transform={`translate(${pt.x}, ${pt.y}) rotate(${rot}) scale(${finalScale})`}
+                    opacity={opacityMul}
                   >
-                    {renderShapeContent(shapeColor)}
+                    {renderShapeContent(color, strokeWidth)}
                   </g>
                 );
               });

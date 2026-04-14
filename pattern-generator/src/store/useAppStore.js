@@ -93,6 +93,12 @@ const useAppStore = create(persist((set, get) => ({
   // Color
   bgColor: '#E8500A',
   shapeColor: '#FFFFFF',
+  shapeColor2: '#1A1714',
+  gradientEnabled: false,
+  opacityDecayAmount: 0,
+
+  // Stroke
+  strokeWidth: 0.3,
 
   // Shape
   selectedShape: 'HEX',
@@ -126,6 +132,10 @@ const useAppStore = create(persist((set, get) => ({
   // Actions — Color
   setBgColor: (c) => set({ bgColor: c }),
   setShapeColor: (c) => set({ shapeColor: c }),
+  setShapeColor2: (c) => set({ shapeColor2: c }),
+  setGradientEnabled: (v) => set({ gradientEnabled: v }),
+  setOpacityDecayAmount: (v) => set({ opacityDecayAmount: v }),
+  setStrokeWidth: (v) => set({ strokeWidth: v }),
 
   // Actions — Shape
   setShape: (s) => set({ selectedShape: s }),
@@ -295,6 +305,10 @@ const useAppStore = create(persist((set, get) => ({
       rotationAngle: s.rotationAngle,
       bgColor: s.bgColor,
       shapeColor: s.shapeColor,
+      shapeColor2: s.shapeColor2,
+      gradientEnabled: s.gradientEnabled,
+      opacityDecayAmount: s.opacityDecayAmount,
+      strokeWidth: s.strokeWidth,
       selectedShape: s.selectedShape,
       gridVisible: s.gridVisible,
       gridCols: s.gridCols,
@@ -308,7 +322,8 @@ const useAppStore = create(persist((set, get) => ({
       'distribution', 'growth', 'spread', 'bloom', 'count',
       'decayAmount', 'decayCurve', 'decayInvert',
       'rotationMode', 'rotationAngle',
-      'bgColor', 'shapeColor', 'selectedShape',
+      'bgColor', 'shapeColor', 'shapeColor2', 'gradientEnabled',
+      'opacityDecayAmount', 'strokeWidth', 'selectedShape',
       'gridVisible', 'gridCols', 'gridRows',
     ];
     const patch = {};
@@ -370,6 +385,10 @@ const useAppStore = create(persist((set, get) => ({
     decayInvert: s.decayInvert,
     rotationMode: s.rotationMode,
     rotationAngle: s.rotationAngle,
+    opacityDecayAmount: s.opacityDecayAmount,
+    strokeWidth: s.strokeWidth,
+    shapeColor2: s.shapeColor2,
+    gradientEnabled: s.gradientEnabled,
     bgColor: s.bgColor,
     shapeColor: s.shapeColor,
     selectedShape: s.selectedShape,

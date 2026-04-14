@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import useAppStore from '../../store/useAppStore';
 import Section from '../ui/Section';
+import Slider from '../ui/Slider';
 import { SHAPES, SHAPE_KEYS } from '../../shapes.jsx';
 import { parseUploadedSvg } from '../../utils/svgParser';
 import styles from './Shapes.module.css';
@@ -8,6 +9,8 @@ import styles from './Shapes.module.css';
 export default function Shapes() {
   const selectedShape = useAppStore((s) => s.selectedShape);
   const setShape = useAppStore((s) => s.setShape);
+  const strokeWidth = useAppStore((s) => s.strokeWidth);
+  const setStrokeWidth = useAppStore((s) => s.setStrokeWidth);
   const savedShapes = useAppStore((s) => s.savedShapes);
   const addSavedShape = useAppStore((s) => s.addSavedShape);
   const removeSavedShape = useAppStore((s) => s.removeSavedShape);
@@ -61,6 +64,18 @@ export default function Shapes() {
             </button>
           );
         })}
+      </div>
+
+      <div className={styles.strokeSection}>
+        <Slider
+          label="Stroke"
+          value={strokeWidth}
+          min={0.05}
+          max={2.0}
+          step={0.05}
+          onChange={setStrokeWidth}
+          decimals={2}
+        />
       </div>
 
       <div className={styles.uploadSection}>

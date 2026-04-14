@@ -21,3 +21,23 @@
   flex-wrap: wrap;
   gap: 4px;
 }
+
+.gradientRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.toggleBtns {
+  display: flex;
+}
+
+.toggleBtn {
+  padding: 4px 10px;
+  font-size: 9px;
+}
+
+.toggleBtns .toggleBtn + .toggleBtn {
+  border-left: none;
+}

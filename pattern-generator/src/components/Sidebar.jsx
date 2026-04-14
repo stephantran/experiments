@@ -1,3 +1,4 @@
+import Group from './ui/Group';
 import Presets from './sections/Presets';
 import Transport from './sections/Transport';
 import Pattern from './sections/Pattern';
@@ -19,17 +20,31 @@ export default function Sidebar({ svgRef }) {
         <span className={styles.title}>FORM</span>
       </div>
       <div className={styles.content}>
-        <Presets />
-        <Transport />
-        <Pattern />
-        <Decay />
-        <Rotation />
-        <Distribution />
-        <GridControls />
-        <Colour />
-        <Shapes />
-        <PresetManager />
-        <Parameters />
+        <Group label="Playback" color="#E8500A">
+          <Presets />
+          <Transport />
+        </Group>
+
+        <Group label="Geometry" color="#1A1714">
+          <Pattern />
+          <Distribution />
+          <Rotation />
+          <Decay />
+        </Group>
+
+        <Group label="Appearance" color="#C96A00">
+          <Shapes />
+          <Colour />
+        </Group>
+
+        <Group label="Frame" color="#7A7470">
+          <GridControls />
+        </Group>
+
+        <Group label="State" color="#3A3530">
+          <PresetManager />
+          <Parameters />
+        </Group>
       </div>
       <Export svgRef={svgRef} />
     </aside>

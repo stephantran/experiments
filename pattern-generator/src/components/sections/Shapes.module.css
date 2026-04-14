@@ -38,6 +38,10 @@
   color: var(--text-muted);
 }
 
+.strokeSection {
+  margin-top: 12px;
+}
+
 .uploadSection {
   margin-top: 12px;
 }

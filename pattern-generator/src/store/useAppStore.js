@@ -59,14 +59,14 @@ const useAppStore = create((set, get) => ({
 
   // Pattern
   distribution: 'PHYLLOTAXIS',
-  growth: 5.5,
-  spread: 15.0,
+  growth: 2.3,
+  spread: 14.0,
   bloom: 171.5,
-  count: 500,
+  count: 4850,
 
   // Decay
-  decayAmount: 0,
-  decayCurve: 'NONE',
+  decayAmount: 1.0,
+  decayCurve: 'PULSE',
   decayInvert: false,
 
   // Grid
@@ -79,7 +79,7 @@ const useAppStore = create((set, get) => ({
   shapeColor: '#FFFFFF',
 
   // Shape
-  selectedShape: 'CIRCLE',
+  selectedShape: 'HEX',
   savedShapes: [],
 
   // Animation
